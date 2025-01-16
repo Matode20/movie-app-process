@@ -20,11 +20,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex gap-3 flex-col">
-        {trendingMovies?.map((movie) => (
-          <TrendingMovieCard key={movie.title} movie={movie} />
-        ))}
+    <div className="overflow-hidden">
+      <div className="w-full overflow-x-scroll mx-5">
+        <div className="flex gap-32 w-fit">
+          {trendingMovies?.map((movie) => (
+            <TrendingMovieCard key={movie.title} movie={movie} />
+          ))}
+        </div>
       </div>
     </div>
   );
