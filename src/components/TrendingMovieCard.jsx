@@ -4,8 +4,7 @@ import { MdPlaylistPlay } from "react-icons/md";
 import { CiSquareChevLeft } from "react-icons/ci";
 import { CiSquareChevRight } from "react-icons/ci";
 
-
-const TrendingMovieCard = ({ movie }) => {
+const TrendingMovieCard = ({ movie, handleScroll }) => {
   return (
     <div className=" relative w-[65rem] text-[#e2e2e2] ">
       <button className="absolute top-4 left-5 px-4 py-1 rounded-2xl bg-slate-200/20">
@@ -46,10 +45,10 @@ const TrendingMovieCard = ({ movie }) => {
           </div>
         </div>
         <div className="flex items-center *:bg-transparent *:rounded-full *:p-4 *:justify-between">
-          <button className="text-2xl">
+          <button onClick={() => handleScroll("left")} className="text-2xl">
             <CiSquareChevLeft />
           </button>
-          <button className="text-2xl">
+          <button onClick={() => handleScroll("right")} className="text-2xl">
             <CiSquareChevRight />
           </button>
         </div>

@@ -1,30 +1,67 @@
 import { useEffect, useState } from "react";
-import { fetchAllMovies } from "../services/omdbApi";
+
 import TrendingMovieCard from "../components/TrendingMovieCard";
 import { trendingMoviesData } from "../data/data";
-
+import { fetchAllMovies } from "../services/omdbApi";
+import MovieCard from "../components/MovieCard";
 const Home = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [trendingMovies, setTrendingMovies] = useState([]);
-
+  const [movies, setMovies] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchAllMovies();
-      console.log(data.Search);
-      setMovies(data.Search); // set the movies state with the data from the API
+    const fetchMovies = async () => {
+      const movies = await fetchAllMovies();
+      console.log(movies);
+      setMovies(movies.Search);
+      console.log(movies.Search);
     };
-    fetchData();
+    fetchMovies();
+
     setTrendingMovies(trendingMoviesData);
-    //dependencies array is empty, so this effect will only run once after the initial render
   }, []);
 
+  const handleScroll = (direction) => {
+    const container = document.querySelector(".overflow-x-hidden");
+    const scrollAmount = container.clientWidth;
+
+    if (direction === "left") {
+      container.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
+    } else {
+      container.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <div className="overflow-hidden">
-      <div className="w-full overflow-x-scroll mx-5">
-        <div className="flex gap-32 w-fit">
+    <div className="relative overflow-hidden ml-60 mt-24">
+      <div
+        className="w-full overflow-x-hidden scroll-smooth"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        <div
+          className="flex justify-around w-fit gap-20 px-10"
+          onWheel={(e) => e.preventDefault()}
+          onScroll={(e) => e.preventDefault()}
+          onTouchMove={(e) => e.preventDefault()}
+        >
           {trendingMovies?.map((movie) => (
-            <TrendingMovieCard key={movie.title} movie={movie} />
+            <TrendingMovieCard
+              key={movie.title}
+              movie={movie}
+              handleScroll={handleScroll}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="px-8 mt-8 ml-10">
+        <h2>Trending</h2>
+        <div className="grid grid-cols-4 mt-8 gap-4 place-items-center">
+          {movies.map((movie) => (
+            <MovieCard key={movie.imdbID} movie={movie}/>
           ))}
         </div>
       </div>
