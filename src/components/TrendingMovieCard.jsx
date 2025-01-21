@@ -11,14 +11,14 @@ const TrendingMovieCard = ({ movie, handleScroll }) => {
         Now Trending 🔥
       </button>
       <img
-        src={movie.poster}
+        src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
         className="w-full object-cover rounded-3xl h-[30rem]"
         alt=""
       />
 
       <div className="absolute bottom-0 w-full p-4 flex items-end justify-between">
         <div>
-          <div>
+          {/* <div>
             {movie.genres.map((genre, index) => {
               <span
                 key={index}
@@ -27,10 +27,10 @@ const TrendingMovieCard = ({ movie, handleScroll }) => {
                 {genre}
               </span>;
             })}
-          </div>
+          </div> */}
           <div className="mt-2 flex flex-col items-start gap-3">
             <h2 className="text-3xl font-bold mt-2">{movie.title}</h2>
-            <p className="text-sm w-[50%]">{movie.plot}</p>
+            <p className="text-sm w-[50%]">{movie.overview}</p>
           </div>
 
           <div className="mt-4 flex gap-4 items-center *:rounded-2xl *:py-1 *:px-3">
