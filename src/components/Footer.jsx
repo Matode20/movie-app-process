@@ -1,30 +1,46 @@
-import { BsTwitterX } from "react-icons/bs";
-import { PiTelegramLogo } from "react-icons/pi";
-import { RiDiscordLine } from "react-icons/ri";
-
 const Footer = () => {
+  const footerLinks = [
+    {
+      text: "© 2021 MovieApp. All rights reserved.",
+    },
+    {
+      text: "Made by ",
+      link: {
+        url: "https://www.twitter.com/dejixice",
+        label: "Mato",
+      },
+    },
+    {
+      text: "Images from ",
+      link: {
+        url: "https://www.themoviedb.org/",
+        label: "TMDB",
+        external: true,
+      },
+    },
+  ];
+
   return (
-    <footer className=" bg-slate-900 text-white flex justify-between mt-10  items-center">
-      <div className="items-center justify-start flex flex-col gap-2 ml-[20rem]">
-        <p className=""> © MovieApp. All Rights Reserved </p>
-        <div className="flex gap-3">
-          <BsTwitterX />
-          <PiTelegramLogo />
-          <RiDiscordLine />
+    <footer className="relative bottom-0 bg flex items-center justify-around w-full px-24">
+      {footerLinks.map((item, index) => (
+        <div key={index}>
+          <p className="text-white text-center py-4">
+            {item.text}
+            {item.link && (
+              <a
+                href={item.link.url}
+                className="text-blue-500"
+                {...(item.link.external && {
+                  target: "_blank",
+                  rel: "noreferrer",
+                })}
+              >
+                {item.link.label}
+              </a>
+            )}
+          </p>
         </div>
-      </div>
-      <div className="flex gap-24 p-7 mr-28 mt-10">
-        <div className="flex flex-col gap-3 items-start">
-          <h1 className="text-2xl font-bold">Help</h1>
-          <button className="">Contact</button>
-          <button>FAQ</button>
-        </div>
-        <div className="flex flex-col gap-3 items-start">
-          <h1 className="text-2xl font-bold">Links</h1>
-          <button>Home</button>
-          <button>Trending</button>
-        </div>
-      </div>
+      ))}
     </footer>
   );
 };

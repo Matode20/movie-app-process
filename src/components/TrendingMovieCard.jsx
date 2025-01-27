@@ -1,56 +1,64 @@
-/* eslint-disable react/prop-types */
-import { FaPlay } from "react-icons/fa";
-import { MdPlaylistPlay } from "react-icons/md";
-import { CiSquareChevLeft } from "react-icons/ci";
-import { CiSquareChevRight } from "react-icons/ci";
 
-const TrendingMovieCard = ({ movie, handleScroll }) => {
+
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { FaPlay, FaYoutube } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+
+const TrendingMovieCard = ({ movie, loading }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+
   return (
-    <div className=" relative w-[65rem] text-[#e2e2e2] ">
-      <button className="absolute top-4 left-5 px-4 py-1 rounded-2xl bg-slate-200/20">
+    <div className="snap-center relative w-[70rem]  mr-14 text-[#e2e2e2] ">
+      {loading || !imageLoaded ? (
+        <div className="w-screen absolute top-0 max-h-screen max-w-full bg-gray-700 animate-pulse"></div>
+      ) : null}
+      <button className=" absolute top-4 left-5 px-4 py-1 rounded-2xl bg-slate-200/20">
         Now Trending 🔥
       </button>
       <img
         src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-        className="w-full object-cover rounded-3xl h-[30rem]"
-        alt=""
+        className={`w-full object-cover rounded-3xl h-[30rem] ${
+          imageLoaded ? "opacity-100" : "opacity-0"
+        }`}
+        alt={movie.title || movie.name || "Movie backdrop"}
+        onLoad={() => setImageLoaded(true)}
+        loading="lazy"
       />
 
       <div className="absolute bottom-0 w-full p-4 flex items-end justify-between">
         <div>
-          {/* <div>
-            {movie.genres.map((genre, index) => {
+          <div className="flex gap-2 items-center">
+            {/* {movie.genres.map((genre, index) => (
               <span
                 key={index}
                 className="text-xs bg-slate-200/20 px-2 py-1 rounded-2xl"
               >
                 {genre}
-              </span>;
-            })}
-          </div> */}
+              </span>
+            ))} */}
+          </div>
           <div className="mt-2 flex flex-col items-start gap-3">
-            <h2 className="text-3xl font-bold mt-2">{movie.title}</h2>
-            <p className="text-sm w-[50%]">{movie.overview}</p>
+            <h2 className="text-3xl font-bold mt-2 font-oswald">{movie.title}</h2>
+            <p className="text-sm w-[50%] font-source text-slate-200">{movie.overview}</p>
           </div>
 
-          <div className="mt-4 flex gap-4 items-center *:rounded-2xl *:py-1 *:px-3">
-            <button className="bg-white text-black flex items-center gap-2 hover:bg-gray-500/50 transition-all duration-300 ease-in-out">
+          <div className="mt-4 flex gap-4 items-center *:rounded-2xl font-source *:py-1 *:px-3 ">
+            <Link
+              to={!movie ? "/" : `/movie/${movie?.id}`}
+              className="bg-white  text-black flex items-center gap-2 "
+            >
               <FaPlay />
               Watch
-            </button>
-            <button className="bg-gray-500/50 flex items-center gap-2 hover: transition-all duration-300 ease-in-out">
-              <MdPlaylistPlay />
+            </Link>
+            <button 
+              className="bg-gray-500/20 flex items-center gap-2 border border-white "
+            >
+              <FaYoutube />
               Trailer
             </button>
           </div>
-        </div>
-        <div className="flex items-center *:bg-transparent *:rounded-full *:p-4 *:justify-between">
-          <button onClick={() => handleScroll("left")} className="text-2xl">
-            <CiSquareChevLeft />
-          </button>
-          <button onClick={() => handleScroll("right")} className="text-2xl">
-            <CiSquareChevRight />
-          </button>
         </div>
       </div>
     </div>
