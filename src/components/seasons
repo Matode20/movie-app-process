@@ -1,3 +1,7 @@
-
-
-const
+const seasons = () => {
+  return (
+    <div>
+      <h1>Seasons</h1>
+    </div>
+  );
+};
