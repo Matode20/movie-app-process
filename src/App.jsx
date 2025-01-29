@@ -10,7 +10,7 @@ import WatchNow from "./pages/WatchNow";
 const App = () => {
   console.log("sdfghjk");
   return (
-    <div className="text-[#e2e2e2] bg h-full flex flex-col m-0 ">
+    <div className="text-[#e2e2e2] bg-slate-900 h-full flex flex-col m-0 ">
       <Header />
       <div className="flex">
         <Routes>
